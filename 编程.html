@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创意编程比赛报名</title>
+    <style>
+        body {
+                   font-family: Arial, sans-serif;
+                   margin: 0;
+                   padding: 0;
+                   display: flex;
+                   justify-content: center;
+                   align-items: center;
+                   height: 100vh;
+                   background-color: #f0f0f0;
+				   flex-direction: column;
+				   background-image: url('background.jpg'); /* 相对路径 */
+				               background-size: cover; /* 让背景图片覆盖整个页面 */
+				               background-position: center; /* 让背景图片居中 */
+				               height: 100vh; /* 让body高度等于视口高度 */
+               }
+		h1 {
+			       margin-bottom: 40px;
+				   font-size: 50px;
+			       color: #333;
+		}
+        .container {
+			margin-top: 10px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], input[type="file"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+			margin:10px;
+            background-color: #00aaff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0000ff;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+	<title>背景图片示例</title>
+	<h1>2024年青少年编程大赛</h1>
+    <div class="container">
+        <form id="registrationForm">
+			<h2>报名信息</h2>
+            <label for="name">姓名</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="school">学校</label>
+            <input type="text" id="school" name="school" required>
+            
+            <label for="grade">年级</label>
+            <input type="text" id="grade" name="grade" required>
+            
+            <label for="photo">上传个人证件照</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+            <div class="error" id="photoError"></div>
+            
+            <button type="submit">提交</button>
+        </form>
+    </div>
+ 
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const photoInput = document.getElementById('photo');
+            const photoError = document.getElementById('photoError');
+            const file = photoInput.files[0];
+            
+            if (file) {
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+ 
+                img.onload = function() {
+                    const maxWidth = 300;
+                    const maxHeight = 420;
+ 
+                    if (img.width > maxWidth || img.height > maxHeight || file.type !== 'image/jpeg') {
+                        photoError.textContent = '照片尺寸需为300px*420px以下，且格式为jpg。';
+                        return false;
+                    }
+ 
+                    // 清除错误信息
+                    photoError.textContent = '';
+ 
+                    // 提交表单数据（这里仅为示例，未实际提交）
+                    // 可以使用 FormData 和 fetch 或 XMLHttpRequest 提交数据到服务器
+                    console.log('表单数据提交成功');
+                }
+ 
+                img.onerror = function() {
+                    photoError.textContent = '无法加载照片，请检查文件是否损坏。';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
